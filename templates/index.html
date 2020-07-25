@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard - COVID-19 Indonesia</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css') }}">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <div class="container-fluid d-flex flex-column p-0">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div class="sidebar-brand-icon rotate-n-15"></div>
+                    <div class="sidebar-brand-text mx-3"><span>NgodingPython</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{{ url_for('home') }}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('table') }}"><i class="fas fa-table"></i><span>Table</span></a></li>
+                    <li class="nav-item" role="presentation"></li>
+                    <li class="nav-item" role="presentation"></li>
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group"></div>
+                        </form>
+                        <ul class="nav navbar-nav flex-nowrap ml-auto">
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow" role="presentation">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">NgodingPython</span><img class="border rounded-circle img-profile" src="{{ url_for('static', filename='img/Icon (64x64).png') }}"></a>
+                                    <div
+                                        class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"></div>
+                    </div>
+                    </li>
+                    </ul>
+            </div>
+            </nav>
+            <div class="container-fluid">
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Informasi COVID-19 di Indonesia</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-primary py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Kasus Positif</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{ data_hari_ini['positif'] }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-warning py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Dalam perawatan</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{ data_hari_ini['perawatan'] }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-success py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>sembuh</span></div>
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col">
+                                                <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>{{ data_hari_ini['sembuh'] }}</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xl-3 mb-4">
+                        <div class="card shadow border-left-danger py-2">
+                            <div class="card-body">
+                                <div class="row align-items-center no-gutters">
+                                    <div class="col mr-2">
+                                        <div class="text-uppercase text-danger font-weight-bold text-xs mb-1"><span>meninggal</span></div>
+                                        <div class="text-dark font-weight-bold h5 mb-0"><span>{{ data_hari_ini['meninggal'] }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7 col-xl-8">
+                        <div class="card shadow mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="text-primary font-weight-bold m-0">Grafik Pertumbuhan Kasus</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area"><div class="chart-area"><canvas id="lineplot"></canvas></div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-xl-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="text-primary font-weight-bold m-0">Kasus Hari Ini</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <select name="Daerah" id="Daerah" onchange="updateDaerah()">
+                                        {% for key, value in data_daerah.items() %}
+                                            <option value="{{value|safe}}">{{key}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <canvas id="barplot_daerah"></canvas>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="text-primary font-weight-bold m-0">Kasus Hari Ini</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area"><canvas data-bs-chart="{ &quot;type&quot;: &quot;bar&quot;, &quot;data&quot;: { &quot;labels&quot;: [&quot;Jumlah Kasus&quot;, &quot;Dalam Perawatan&quot;, &quot;Sembuh&quot;, &quot;Meninggal&quot;], &quot;datasets&quot;: [{ &quot;label&quot;: &quot;Jumlah&quot;, &quot;fill&quot;: true, &quot;data&quot;: [&quot;{{data_hari_ini['positif_harian']}}&quot;, &quot;{{data_hari_ini['perawatan_harian']}}&quot;, &quot;{{data_hari_ini['sembuh_harian']}}&quot;, &quot;{{data_hari_ini['meninggal_harian']}}&quot;], &quot;backgroundColor&quot;:[ &quot;rgba(78, 115, 223, 1)&quot;, &quot;rgb(246,194,62)&quot;, &quot;rgb(28,200,138)&quot;, &quot;rgb(231, 74, 59)&quot;, &quot;rgba(153, 102, 255, 0.6)&quot;, &quot;rgba(255, 159, 64, 0.6)&quot;, &quot;rgba(255, 99, 132, 0.6)&quot; ], &quot;borderColor&quot;: &quot;rgba(78, 115, 223, 1)&quot; }] }, &quot;options&quot;: { &quot;maintainAspectRatio&quot;: false, &quot;legend&quot;: { &quot;display&quot;: false }, &quot;title&quot;: { &quot;display&quot;:true, &quot;text&quot;:&quot;Kasus Tanggal {{ data_hari_ini['tanggal'] }}&quot;, &quot;fontSize&quot;:25 }, &quot;scales&quot;: { &quot;xAxes&quot;: [{ &quot;gridLines&quot;: { &quot;color&quot;: &quot;rgb(234, 236, 244)&quot;, &quot;zeroLineColor&quot;: &quot;rgb(234, 236, 244)&quot;, &quot;drawBorder&quot;: false, &quot;drawTicks&quot;: false, &quot;borderDash&quot;: [&quot;2&quot;], &quot;zeroLineBorderDash&quot;: [&quot;2&quot;], &quot;drawOnChartArea&quot;: false }, &quot;ticks&quot;: { &quot;fontColor&quot;: &quot;#858796&quot;, &quot;padding&quot;: 20 } }], &quot;yAxes&quot;: [{ &quot;gridLines&quot;: { &quot;color&quot;: &quot;rgb(234, 236, 244)&quot;, &quot;zeroLineColor&quot;: &quot;rgb(234, 236, 244)&quot;, &quot;drawBorder&quot;: false, &quot;drawTicks&quot;: false, &quot;borderDash&quot;: [&quot;2&quot;], &quot;zeroLineBorderDash&quot;: [&quot;2&quot;] }, &quot;ticks&quot;: { &quot;fontColor&quot;: &quot;#858796&quot;, &quot;padding&quot;: 20 } }] } } }"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="text-primary font-weight-bold m-0">Informasi Pengetesan</h6>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col">
+                                            <div class="card shadow border-left-primary py-2">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col mr-2">
+                                                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Total Spesimen Diperiksa</span></div>
+                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col">
+                                            <div class="card shadow border-left-secondary py-2">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col mr-2">
+                                                            <div class="text-uppercase text-secondary font-weight-bold text-xs mb-1"><span>Total Kasus Diperiksa</span></div>
+                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col">
+                                            <div class="card shadow border-left-info py-2">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col mr-2">
+                                                            <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Total Negatif Diperiksa</span></div>
+                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-white sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright"><span>Copyright © NgodingPython 2020</span></div>
+            </div>
+        </footer>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bs-init.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script>
+            // Data untuk line chart
+        var myData = {
+        "labels": {{data_rekap['label']|safe}},
+        "datasets": [{
+            "label": "Kasus Aktif",
+            "fill": false,
+            "data": {{data_rekap['positif']|safe}},
+            "backgroundColor": "rgba(78, 115, 223, 0.05)",
+            "borderColor": "rgba(78, 115, 223, 1)"
+        }, {
+            "label": "Dalam Perawatan",
+            "fill": false,
+            "data": {{data_rekap['perawatan']|safe}},
+            "backgroundColor": "rgb(246,194,62)",
+            "borderColor": "rgb(246,194,62)"
+        }, {
+            "label": "Sembuh",
+            "fill": false,
+            "data": {{data_rekap['sembuh']|safe}},
+            "backgroundColor": "rgb(28,200,138)",
+            "borderColor": "rgb(28,200,138)"
+        }, {
+            "label": "Meninggal",
+            "fill": false,
+            "data": {{data_rekap['meninggal']|safe}},
+            "backgroundColor": "rgb(231, 74, 59)",
+            "borderColor": "rgb(231, 74, 59)"
+        }]
+    };
+
+            // Code to drow Chart
+            // Default chart defined with type: 'bar'
+            var ctx = document.getElementById('lineplot').getContext('2d');
+            var barChart = new Chart(ctx, {
+                type: 'line',        // Define chart type
+                data: myData        // Chart data
+            });
+    </script>
+    <script>
+            // Data define for bar chart
+            var myData = {
+                labels: ["Kasus Positif", "Sembuh", "Meninggal"],
+                datasets: [{
+                    label: "Provinsi DKI Jakarta",
+                    fill: false,
+                    backgroundColor: ['rgba(78, 115, 223, 1)', 'rgb(246,194,62)', 'rgb(28,200,138)', 'rgb(231, 74, 59)'],
+                    borderColor: 'black',
+                    data: {{data_daerah['Dki Jakarta']|safe}},
+                }]
+            };
+
+            // Code to drow Chart
+            // Default chart defined with type: 'bar'
+            var ctx = document.getElementById('barplot_daerah').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',        // Define chart type
+                data: myData        // Chart data
+            });
+
+            // Function runs on chart type select update
+
+            function updateDaerah() {
+                var updataData = {
+                labels: ["Kasus Positif", "Sembuh", "Meninggal"],
+                datasets: [{
+                    //label: "Provinsi DKI Jakarta",
+                    fill: false,
+                    backgroundColor: ['rgba(78, 115, 223, 1)', 'rgb(28,200,138)', 'rgb(231, 74, 59)'],
+                    borderColor: 'black',
+                    data: JSON.parse(document.getElementById("Daerah").value),
+                        }]
+                    };
+
+                // Destroy the previous chart
+                myChart.destroy();
+                // Draw a new chart on the basic of dropdown
+                myChart = new Chart(ctx, {
+                    type: 'bar',  // Select chart type from dropdown
+                    data: updataData
+                });
+            };
+        </script>
+</body>
+
+</html>
