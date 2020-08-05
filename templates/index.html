@@ -159,23 +159,7 @@
                                                     <div class="row align-items-center no-gutters">
                                                         <div class="col mr-2">
                                                             <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Total Spesimen Diperiksa</span></div>
-                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col">
-                                            <div class="card shadow border-left-secondary py-2">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center no-gutters">
-                                                        <div class="col mr-2">
-                                                            <div class="text-uppercase text-secondary font-weight-bold text-xs mb-1"><span>Total Kasus Diperiksa</span></div>
-                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
+                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{ data_hari_ini['total_spesimen_diperiksa'] }}</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -191,7 +175,39 @@
                                                     <div class="row align-items-center no-gutters">
                                                         <div class="col mr-2">
                                                             <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Total Negatif Diperiksa</span></div>
-                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>0</span></div>
+                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{ data_hari_ini['total_negatif_diperiksa'] }}</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col">
+                                            <div class="card shadow border-left-info py-2">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col mr-2">
+                                                            <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Suspek</span></div>
+                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{ data_hari_ini['suspek'] }}</span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col">
+                                            <div class="card shadow border-left-info py-2">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center no-gutters">
+                                                        <div class="col mr-2">
+                                                            <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Probable</span></div>
+                                                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{ data_hari_ini['probable'] }}</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -259,44 +275,67 @@
     <script>
             // Data define for bar chart
             var myData = {
-                labels: ["Kasus Positif", "Sembuh", "Meninggal"],
+                labels: ["Positif", "Sembuh", "Meninggal"],
                 datasets: [{
-                    label: "Provinsi DKI Jakarta",
+                    label: "DKI Jakarta",
                     fill: false,
-                    backgroundColor: ['rgba(78, 115, 223, 1)', 'rgb(246,194,62)', 'rgb(28,200,138)', 'rgb(231, 74, 59)'],
+                    backgroundColor: ['rgb(246,194,62)', 'rgb(28,200,138)', 'rgb(231, 74, 59)'],
                     borderColor: 'black',
-                    data: {{data_daerah['Dki Jakarta']|safe}},
+                    data: {{data_daerah['Dki Jakarta']}},
                 }]
             };
+            var optChart = {
+                              legend: {
+                                display: false
+                              },
+                              title: {
+                                    display: true,
+                                    text: "DKI Jakarta",
+                                }
+                            };
+
+
 
             // Code to drow Chart
             // Default chart defined with type: 'bar'
             var ctx = document.getElementById('barplot_daerah').getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',        // Define chart type
-                data: myData        // Chart data
+                data: myData,        // Chart data
+                options: optChart
             });
 
             // Function runs on chart type select update
 
             function updateDaerah() {
-                var updataData = {
-                labels: ["Kasus Positif", "Sembuh", "Meninggal"],
+                var e = document.getElementById("Daerah")
+                var updateData = {
+                labels: ["Positif", "Sembuh", "Meninggal"],
                 datasets: [{
-                    //label: "Provinsi DKI Jakarta",
+                    label: e.options[e.selectedIndex].firstChild.nodeValue,
                     fill: false,
-                    backgroundColor: ['rgba(78, 115, 223, 1)', 'rgb(28,200,138)', 'rgb(231, 74, 59)'],
+                    backgroundColor: ['rgb(246,194,62)', 'rgb(28,200,138)', 'rgb(231, 74, 59)'],
                     borderColor: 'black',
-                    data: JSON.parse(document.getElementById("Daerah").value),
+                    data: JSON.parse(e.value),
                         }]
                     };
 
+                var optChartNew = {
+                              legend: {
+                                display: false
+                              },
+                              title: {
+                                    display: true,
+                                    text: e.options[e.selectedIndex].firstChild.nodeValue,
+                                }
+                            };
                 // Destroy the previous chart
                 myChart.destroy();
                 // Draw a new chart on the basic of dropdown
                 myChart = new Chart(ctx, {
-                    type: 'bar',  // Select chart type from dropdown
-                    data: updataData
+                    type: 'bar',
+                    data: updateData,
+                    options: optChartNew
                 });
             };
         </script>

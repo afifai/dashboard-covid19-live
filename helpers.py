@@ -2,7 +2,7 @@ import json
 import requests
 
 def ambil_data_hari_ini():
-    url = 'https://covid19.ngodingpython.com/hari-ini/'
+    url = 'https://covid19.ngodingpython.com/api/hari-ini/'
     r = requests.get(url)
     data = json.loads(r.text)
     data_hari_ini = {'tanggal':data['data']['tanggal'],
@@ -13,11 +13,15 @@ def ambil_data_hari_ini():
                      'positif_harian':data['data']['kasus_harian'],
                      'perawatan_harian':data['data']['perawatan_harian'],
                      'sembuh_harian':data['data']['sembuh_harian'],
-                     'meninggal_harian':data['data']['meninggal_harian']}
+                     'meninggal_harian':data['data']['meninggal_harian'],
+                     'total_spesimen_diperiksa':data['data']['total_spesimen_diperiksa'],
+                     'total_negatif_diperiksa': data['data']['total_negatif_diperiksa'],
+                     'suspek' : data['data']['suspek'],
+                     'probable': data['data']['probable']}
     return data_hari_ini
 
 def rekapitulasi():
-    url = 'https://covid19.ngodingpython.com/kumulatif/'
+    url = 'https://covid19.ngodingpython.com/api/kumulatif/'
     r = requests.get(url)
     data = json.loads(r.text)
     indexer = None
@@ -37,7 +41,7 @@ def rekapitulasi():
     return data_rekap
 
 def rekapitulasi_tabel():
-    url = 'https://covid19.ngodingpython.com/kumulatif/'
+    url = 'https://covid19.ngodingpython.com/api/kumulatif/'
     r = requests.get(url)
     data = json.loads(r.text)
     indexer = None
@@ -50,7 +54,7 @@ def rekapitulasi_tabel():
 
 
 def get_daerah(text):
-    url = f'https://covid19.ngodingpython.com/daerah?lok={text}'
+    url = f'https://covid19.ngodingpython.com/api/daerah?lok={text}'
     r = requests.get(url)
     data = json.loads(r.text)
     return data['provinsi'], data['data']
